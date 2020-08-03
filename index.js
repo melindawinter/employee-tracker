@@ -3,24 +3,8 @@ const table = require("console.table");
 
 var mysql = require("mysql");
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "yourRootPassword",
-  database: "wintermute_db",
-});
-
-connection.connect(function (err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
-  console.log("connected as id " + connection.threadId);
-  //   Start app by calling first function
-  initialQuestion();
-});
-
+//   Start app by calling first function
+initialQuestion();
 // This first function sets up the task the user wants to perform
 function initialQuestion() {
   inquirer
