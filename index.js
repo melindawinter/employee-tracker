@@ -1,3 +1,6 @@
+const inquirer = require("inquirer");
+const table = require("console.table");
+
 var mysql = require("mysql");
 
 var connection = mysql.createConnection({
@@ -15,5 +18,3 @@ connection.connect(function (err) {
   }
   console.log("connected as id " + connection.threadId);
 });
-
-module.exports = connection;
