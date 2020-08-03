@@ -82,19 +82,26 @@ function initialQuestion() {
 function viewAll() {
   connection.query("SELECT * FROM employee", function (err, data) {
     console.table(data);
+    console.log("You are viewing all employees");
     // Call function to go back to the questionnaire
     initialQuestion();
   });
 }
 
-// function viewDepartment
+// Function to view a department
+function viewDepartment() {
+  connection.query("SELECT * FROM department", function (err, data) {
+    console.table(data);
+    console.log;
+  });
+}
 
-// function viewManager
+// Function to view employees by manager viewManager
 
-// function addEmployee
+// Function to add an employee addEmployee
 
-// function removeEmployee
+// Function to remove an employee removeEmployee
 
-// function updateRole
+// Function to update an employee's role updateRole
 
-// function updateManager
+// Function to update an employee's manager updateManager
