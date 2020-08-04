@@ -90,6 +90,10 @@ async function mainMenu() {
   }
 }
 
+
+
+// Functions for employees
+
 // Function to view all employees
 async function viewEmployees() {
   const employees = await db.viewEmployees();
@@ -101,12 +105,12 @@ async function viewEmployees() {
 
 // Function to add an employee
 async function addEmployee() {
-  const departments = await db.viewEmployees();
+  const departments = await db.viewDepartments();
   const departmentChoices = departments.map(({ id, name }) => ({
     name: name,
     value: id,
   }));
-  const role = await inquirer.prompt([
+  const employee = await inquirer.prompt([
     {
       name: "firstName",
       message: "What is the first name of the employee?",
@@ -126,7 +130,7 @@ async function addEmployee() {
       choices: departmentChoices,
     },
   ]);
-  await db.addRole(role);
+  await db.addEmployee(employee);
   console.log(`Added ${employee.firstName} to the database`);
   // Call function to go back to the questionnaire
   mainMenu();
@@ -135,29 +139,25 @@ async function addEmployee() {
 // Function to remove an employee
 async function removeEmployee() {
 
-
-
-
-
-
-
-  
-// Function to view a department
-function viewDepartment() {
-  connection.query("SELECT * FROM department", function (err, data) {
-    console.table(data);
-    console.log;
-  });
 }
 
-// Function to view employees by manager viewManager
+// Function to update an employee's role
+async function updateRole() {
 
+}
 
+// Functions for roles
 
-// Function to update an employee's role updateRole
+// Function to view all roles
+async function viewRoles() {
+  const roles = await db.viewRoles();
+  console.table(roles);
+  console.log("You are viewing all roles.");
+  // Call function to go back to the questionnaire
+  mainMenu();
+}
 
-// Function to update an employee's manager updateManager
-
+// Function to add a role
 async function addRole() {
   const departments = await db.viewDepartments();
   const departmentChoices = departments.map(({ id, name }) => ({
@@ -184,6 +184,37 @@ async function addRole() {
   console.log(`Added ${role.title} to the database`);
   mainMenu();
 }
+
+
+// Functions for departments
+
+// Function to view all departments
+function viewDepartments() {
+  const departments = await db.viewDepartments();
+  console.table(departments);
+  console.log("You are viewing all departments.");
+  // Call function to go back to the questionnaire
+  mainMenu();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // use map on view employees by department; update employee role; anytime there are multiple categories - anytime inquirer is used
 
