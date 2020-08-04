@@ -3,68 +3,57 @@ const table = require("console.table");
 const db = require("./database");
 var mysql = require("mysql");
 
-// const { prompt } = require("inquirer");
-
 //   Start app by calling first function
 mainMenu();
 
+// This first function sets up the task the user wants to perform
 async function mainMenu() {
-  const { choice } = await prompt([
+  const { choice } = await inquirer.prompt([
     {
       type: "list",
       name: "choice",
-      message: "What would you like to do?",
+      message: "Hello. Which management task would you like to perform?",
       choices: [
         {
-          name: "View All Employees",
+          name: "View all employees",
           value: "VIEW_EMPLOYEES",
         },
+
         {
-          name: "View All Employees By Department",
-          value: "VIEW_EMPLOYEES_BY_DEPARTMENT",
-        },
-        {
-          name: "View All Employees By Manager",
-          value: "VIEW_EMPLOYEES_BY_MANAGER",
-        },
-        {
-          name: "Add Employee",
+          name: "Add an employee",
           value: "ADD_EMPLOYEE",
         },
         {
-          name: "Remove Employee",
+          name: "Remove an employee",
           value: "REMOVE_EMPLOYEE",
         },
         {
-          name: "Update Employee Role",
+          name: "Update an employee's role",
           value: "UPDATE_EMPLOYEE_ROLE",
         },
+
         {
-          name: "Update Employee Manager",
-          value: "UPDATE_EMPLOYEE_MANAGER",
-        },
-        {
-          name: "View All Roles",
+          name: "View all roles",
           value: "VIEW_ROLES",
         },
         {
-          name: "Add Role",
+          name: "Add a role",
           value: "ADD_ROLE",
         },
         {
-          name: "Remove Role",
+          name: "Remove a role",
           value: "REMOVE_ROLE",
         },
         {
-          name: "View All Departments",
+          name: "View all departments",
           value: "VIEW_DEPARTMENTS",
         },
         {
-          name: "Add Department",
+          name: "Add a department",
           value: "ADD_DEPARTMENT",
         },
         {
-          name: "Remove Department",
+          name: "Remove a department",
           value: "REMOVE_DEPARTMENT",
         },
         {
@@ -74,102 +63,40 @@ async function mainMenu() {
       ],
     },
   ]);
-  // Call the appropriate function depending on what the user chose
+  // Call the appropriate function depending on which task the user wants to perform
   switch (choice) {
     case "VIEW_EMPLOYEES":
       return viewEmployees();
-    case "VIEW_EMPLOYEES_BY_DEPARTMENT":
-      return viewEmployeesByDepartment();
-    case "VIEW_EMPLOYEES_BY_MANAGER":
-      return viewEmployeesByManager();
     case "ADD_EMPLOYEE":
       return addEmployee();
     case "REMOVE_EMPLOYEE":
       return removeEmployee();
     case "UPDATE_EMPLOYEE_ROLE":
-      return updateEmployeeRole();
-    case "UPDATE_EMPLOYEE_MANAGER":
-      return updateEmployeeManager();
-    case "VIEW_DEPARTMENTS":
-      return viewDepartments();
-    case "ADD_DEPARTMENT":
-      return addDepartment();
-    case "REMOVE_DEPARTMENT":
-      return removeDepartment();
+      return updateRole();
     case "VIEW_ROLES":
       return viewRoles();
     case "ADD_ROLE":
       return addRole();
     case "REMOVE_ROLE":
       return removeRole();
+    case "VIEW_DEPARTMENTS":
+      return viewDepartments();
+    case "ADD_DEPARTMENT":
+      return addDepartment();
+    case "REMOVE_DEPARTMENT":
+      return removeDepartment();
     default:
       return quit();
   }
-}
-
-// This first function sets up the task the user wants to perform
-async function mainMenu() {
-  inquirer
-    .prompt({
-      type: "list",
-      name: "manage",
-      message: "Hello. Which management task would you like to perform?",
-      choices: [
-        "View all employees",
-        "View all employees by department",
-        "View all employees by manager",
-        "Add an employee",
-        "Remove an employee",
-        "Update an employee's role",
-        "Update an employee's manager",
-        "Quit",
-      ],
-    })
-    .then(answers => {
-      console.log(answers.manage);
-      // Switch statement to redirect to next portion of the questionnaire depending on the answer
-      switch (answers.manage) {
-        case "View all employees":
-          viewAll();
-          break;
-
-        case "View all employees by department":
-          viewDepartment();
-          break;
-
-        case "View all employees by manager":
-          viewManager();
-          break;
-
-        case "Add an employee":
-          addEmployee();
-          break;
-
-        case "Remove an employee":
-          removeEmployee();
-          break;
-
-        case "Update an employee's role":
-          updateRole();
-          break;
-
-        case "Update an employee's manager":
-          updateManager();
-          break;
-
-        default:
-          return quit();
-      }
-    });
 }
 
 // Function to view all employees
 async function viewEmployees() {
   var employees = await db.viewEmployees();
   console.table(employees);
-  console.log("You are viewing all employees");
+  console.log("You are viewing all employees.");
   // Call function to go back to the questionnaire
-  initialQuestion();
+  mainMenu();
 }
 
 // Function to view a department
@@ -191,7 +118,7 @@ function viewDepartment() {
 // Function to update an employee's manager updateManager
 
 async function addRole() {
-  const departments = await db.findAllDepartments();
+  const departments = await db.viewDepartments();
   const departmentChoices = departments.map(({ id, name }) => ({
     name: name,
     value: id,
@@ -212,9 +139,31 @@ async function addRole() {
       choices: departmentChoices,
     },
   ]);
-  await db.createRole(role);
+  await db.addRole(role);
   console.log(`Added ${role.title} to the database`);
-  initialQuestion();
+  mainMenu();
 }
 
 // use map on view employees by department; update employee role; anytime there are multiple categories - anytime inquirer is used
+
+// For an extended version
+// const { prompt } = require("inquirer");
+// {
+//   name: "View All Employees By Department",
+//   value: "VIEW_EMPLOYEES_BY_DEPARTMENT",
+// },
+// {
+//   name: "View All Employees By Manager",
+//   value: "VIEW_EMPLOYEES_BY_MANAGER",
+// },
+// {
+//   name: "Update Employee Manager",
+//   value: "UPDATE_EMPLOYEE_MANAGER",
+// },
+
+// case "VIEW_EMPLOYEES_BY_DEPARTMENT":
+//   return viewEmployeesByDepartment();
+// case "VIEW_EMPLOYEES_BY_MANAGER":
+//   return viewEmployeesByManager();
+// case "UPDATE_EMPLOYEE_MANAGER":
+//   return updateEmployeeManager();
