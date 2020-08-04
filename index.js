@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const table = require("console.table");
 const db = require("./database");
-var mysql = require("mysql");
+const mysql = require("mysql");
 
 //   Start app by calling first function
 mainMenu();
@@ -92,13 +92,56 @@ async function mainMenu() {
 
 // Function to view all employees
 async function viewEmployees() {
-  var employees = await db.viewEmployees();
+  const employees = await db.viewEmployees();
   console.table(employees);
   console.log("You are viewing all employees.");
   // Call function to go back to the questionnaire
   mainMenu();
 }
 
+// Function to add an employee
+async function addEmployee() {
+  const departments = await db.viewEmployees();
+  const departmentChoices = departments.map(({ id, name }) => ({
+    name: name,
+    value: id,
+  }));
+  const role = await inquirer.prompt([
+    {
+      name: "firstName",
+      message: "What is the first name of the employee?",
+    },
+    {
+      name: "lastName",
+      message: "What is the last name of the employee?",
+    },
+    {
+      name: "role",
+      message: "What is the employee's role?",
+    },
+    {
+      type: "list",
+      name: "department_id",
+      message: "Which department is the employee joining?",
+      choices: departmentChoices,
+    },
+  ]);
+  await db.addRole(role);
+  console.log(`Added ${employee.firstName} to the database`);
+  // Call function to go back to the questionnaire
+  mainMenu();
+}
+
+// Function to remove an employee
+async function removeEmployee() {
+
+
+
+
+
+
+
+  
 // Function to view a department
 function viewDepartment() {
   connection.query("SELECT * FROM department", function (err, data) {
@@ -109,9 +152,7 @@ function viewDepartment() {
 
 // Function to view employees by manager viewManager
 
-// Function to add an employee addEmployee
 
-// Function to remove an employee removeEmployee
 
 // Function to update an employee's role updateRole
 
