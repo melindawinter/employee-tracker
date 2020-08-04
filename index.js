@@ -90,8 +90,6 @@ async function mainMenu() {
   }
 }
 
-
-
 // Functions for employees
 
 // Function to view all employees
@@ -137,14 +135,10 @@ async function addEmployee() {
 }
 
 // Function to remove an employee
-async function removeEmployee() {
-
-}
+async function removeEmployee() {}
 
 // Function to update an employee's role
-async function updateRole() {
-
-}
+async function updateRole() {}
 
 // Functions for roles
 
@@ -185,11 +179,13 @@ async function addRole() {
   mainMenu();
 }
 
+// Function to remove a role
+async function removeRole() {}
 
 // Functions for departments
 
 // Function to view all departments
-function viewDepartments() {
+async function viewDepartments() {
   const departments = await db.viewDepartments();
   console.table(departments);
   console.log("You are viewing all departments.");
@@ -197,29 +193,47 @@ function viewDepartments() {
   mainMenu();
 }
 
+// Function to add a department
+async function addDepartment() {
+  const departments = await db.viewDepartments();
+  // const departmentChoices = departments.map(({ id, name }) => ({
+  //   name: name,
+  //   value: id,
+  // }));
+  const role = await inquirer.prompt([
+    {
+      name: "name",
+      message: "What is the name of the department?",
+    },
+  ]);
+  await db.addDepartment(department);
+  console.log(`Added ${department.name} to the database`);
+  // Call function to go back to the questionnaire
+  mainMenu();
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// use map on view employees by department; update employee role; anytime there are multiple categories - anytime inquirer is used
+// Function to delete a department
+async function removeDepartment() {
+  const departments = await db.viewDepartments();
+  const departmentChoices = departments.map(({ id, name }) => ({
+    name: name,
+    value: id,
+  }));
+  const { departmentId } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "departmentId",
+      message: "Which department does the role belong to?",
+      choices: departmentChoices,
+    },
+  ]);
+  await db.removeDepartment(departmentId);
+  console.log(`Removed ${department.name} from the database`);
+  // Call function to go back to the questionnaire
+  mainMenu();
+}
 
 // For an extended version
-// const { prompt } = require("inquirer");
 // {
 //   name: "View All Employees By Department",
 //   value: "VIEW_EMPLOYEES_BY_DEPARTMENT",
