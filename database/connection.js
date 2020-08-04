@@ -19,4 +19,4 @@ connection.connect(function (err) {
 
 connection.query = util.promisify(connection.query);
 
-module.exports = connection.js;
+module.exports = connection;

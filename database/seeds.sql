@@ -19,7 +19,7 @@ VALUES
     ('lead engineer', 150000, 2),
     ('software engineer', 120000, 2),
     ('account manager', 160000, 3),
-    ('accountant', 125000, 3)
+    ('accountant', 125000, 3),
     ('legal team lead', 250000, 4),
     ('lawyer', 190000, 4);
 
