@@ -49,9 +49,7 @@ class DataBase {
 
   // View all departments
   viewDepartments() {
-    return this.connection.query(
-      "SELECT department.id, department.name, role.salary FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id GROUP BY department.id, department.name"
-    );
+    return this.connection.query("SELECT * FROM department");
   }
 
   // Add a department

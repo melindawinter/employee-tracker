@@ -103,39 +103,46 @@ async function viewEmployees() {
 
 // Function to add an employee
 async function addEmployee() {
-  const departments = await db.viewDepartments();
-  const departmentChoices = departments.map(({ id, name }) => ({
-    name: name,
-    value: id,
-  }));
   const employee = await inquirer.prompt([
     {
-      name: "firstName",
+      name: "first_name",
       message: "What is the first name of the employee?",
     },
     {
-      name: "lastName",
+      name: "last_name",
       message: "What is the last name of the employee?",
     },
     {
-      name: "role",
-      message: "What is the employee's role?",
-    },
-    {
-      type: "list",
-      name: "department_id",
-      message: "Which department is the employee joining?",
-      choices: departmentChoices,
+      name: "role_id",
+      message: "What is the employee's role id?",
     },
   ]);
   await db.addEmployee(employee);
-  console.log(`Added ${employee.firstName} to the database`);
+  console.log(`Added ${employee.first_name} to the database`);
   // Call function to go back to the questionnaire
   mainMenu();
 }
 
 // Function to remove an employee
-async function removeEmployee() {}
+async function removeEmployee() {
+  const employees = await db.viewEmployees();
+  const employeeChoices = employees.map(({ first_name, last_name }) => ({
+    name: first_name,
+    name: last_name,
+  }));
+  const { employee } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "employee",
+      message: "Which employee do you want to delete?",
+      choices: employeeChoices,
+    },
+  ]);
+  await db.removeEmployee(employee);
+  console.log(`Removed the employee from the database`);
+  // Call function to go back to the questionnaire
+  mainMenu();
+}
 
 // Function to update an employee's role
 async function updateRole() {}
@@ -200,10 +207,10 @@ async function addDepartment() {
   //   name: name,
   //   value: id,
   // }));
-  const role = await inquirer.prompt([
+  const department = await inquirer.prompt([
     {
       name: "name",
-      message: "What is the name of the department?",
+      message: "What is the name of the department you want to add?",
     },
   ]);
   await db.addDepartment(department);
@@ -223,7 +230,7 @@ async function removeDepartment() {
     {
       type: "list",
       name: "departmentId",
-      message: "Which department does the role belong to?",
+      message: "Which department do you want to remove?",
       choices: departmentChoices,
     },
   ]);
