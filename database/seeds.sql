@@ -1,4 +1,4 @@
--- Departments: Sales, Engineering, Finance, Legal
+
 
 use wintermute_db
 
@@ -14,7 +14,7 @@ VALUES
 INSERT INTO role
     (title, salary, department_id)
 VALUES
-    ('sales lead', 100000, 1),
+    ('saleslead', 100000, 1),
     ('salesperson', 80000, 1),
     ('lead engineer', 150000, 2),
     ('software engineer', 120000, 2),
@@ -26,7 +26,7 @@ VALUES
     INSERT INTO employee
         (first_name, last_name, role_id, manager_id)
     VALUES
-        ('Barbara', 'Gordon', 5, NULL),
-        ('Samantha', 'Groves', 6, 20),
-        ('Felicity', 'Smoak', 7, 25),
-        ('Alice', 'Morgan', 8, NULL);
+        ('Barbara', 'Gordon', 1, NULL),
+        ('Samantha', 'Groves', 2, 20),
+        ('Felicity', 'Smoak', 3, 25),
+        ('Alice', 'Morgan', 4, NULL);

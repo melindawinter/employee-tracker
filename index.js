@@ -216,7 +216,25 @@ async function addRole() {
 }
 
 // Function to remove a role
-async function removeRole() {}
+async function removeRole() {
+  const roles = await db.viewRoles();
+  const roleChoices = roles.map(({ id, title }) => ({
+    name: title,
+    value: id,
+  }));
+  const { roleId } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "roleId",
+      message: "Which role do you want to remove?",
+      choices: roleChoices,
+    },
+  ]);
+  await db.removeRole(roleId);
+  console.log(`This role has been removed from the database.`);
+  // Call function to go back to the questionnaire
+  mainMenu();
+}
 
 // Functions for departments
 
