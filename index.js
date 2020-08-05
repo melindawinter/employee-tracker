@@ -235,7 +235,7 @@ async function removeDepartment() {
     },
   ]);
   await db.removeDepartment(departmentId);
-  console.log(`Removed ${department.name} from the database`);
+  console.log(`Removed this department from the database.`);
   // Call function to go back to the questionnaire
   mainMenu();
 }
