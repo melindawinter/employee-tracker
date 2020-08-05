@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const table = require("console.table");
 const db = require("./database");
 const mysql = require("mysql");
+const { connection } = require("./database");
 
 //   Start app by calling first function
 mainMenu();
@@ -261,7 +262,7 @@ async function addDepartment() {
     },
   ]);
   await db.addDepartment(department);
-  console.log(`Added ${department.name} to the database`);
+  console.log(`Added ${department.name} to the database.`);
   // Call function to go back to the questionnaire
   mainMenu();
 }
@@ -285,6 +286,11 @@ async function removeDepartment() {
   console.log(`This department has been removed from the database.`);
   // Call function to go back to the questionnaire
   mainMenu();
+}
+
+function quit() {
+  connection.end;
+  console.log("Thank you for using the employee manager.");
 }
 
 // For an extended version
