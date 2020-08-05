@@ -18,8 +18,11 @@ class DataBase {
   }
 
   // Remove an employee
-  removeEmployee(id) {
-    return this.connection.query("DELETE FROM employee WHERE id = ?", id);
+  removeEmployee(employeeId) {
+    return this.connection.query(
+      "DELETE FROM employee WHERE id = ?",
+      employeeId
+    );
   }
 
   // Update an employee's role

@@ -126,6 +126,32 @@ async function addEmployee() {
 // Function to remove an employee
 async function removeEmployee() {
   const employees = await db.viewEmployees();
+  const employeeChoices = employees.map(({ id, last_name }) => ({
+    name: last_name,
+    value: id,
+  }));
+  const { employeeId } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "employee",
+      message: "Which employee do you want to delete?",
+      choices: employeeChoices,
+    },
+  ]);
+  await db.removeEmployee(employeeId);
+  console.log(`The employee has been removed from the database`);
+  // Call function to go back to the questionnaire
+  mainMenu();
+}
+
+// Function to update an employee's role
+async function updateRole(employeeId, roleId) {
+  const roles = await db.viewRoles();
+  const roleChoices = roles.map(({ id, title }) => ({
+    name: title,
+    value: id,
+  }));
+  const employees = await db.viewEmployees();
   const employeeChoices = employees.map(({ first_name, last_name }) => ({
     name: first_name,
     name: last_name,
@@ -134,18 +160,21 @@ async function removeEmployee() {
     {
       type: "list",
       name: "employee",
-      message: "Which employee do you want to delete?",
+      message: "Which employee do you want to update?",
+
       choices: employeeChoices,
     },
+    {
+      type: "list",
+      name: "roleId",
+      message: "Which role do you want to assign to the employee?",
+      choices: roleChoices,
+    },
   ]);
-  await db.removeEmployee(employee);
-  console.log(`Removed the employee from the database`);
+  await db.updateRole(employeeId, roleId);
   // Call function to go back to the questionnaire
   mainMenu();
 }
-
-// Function to update an employee's role
-async function updateRole() {}
 
 // Functions for roles
 
@@ -182,7 +211,7 @@ async function addRole() {
     },
   ]);
   await db.addRole(role);
-  console.log(`Added ${role.title} to the database`);
+  console.log(`The role has been added to the database`);
   mainMenu();
 }
 
@@ -235,7 +264,7 @@ async function removeDepartment() {
     },
   ]);
   await db.removeDepartment(departmentId);
-  console.log(`Removed this department from the database.`);
+  console.log(`This department has been removed from the database.`);
   // Call function to go back to the questionnaire
   mainMenu();
 }
