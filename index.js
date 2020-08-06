@@ -134,7 +134,7 @@ async function removeEmployee() {
   const { employeeId } = await inquirer.prompt([
     {
       type: "list",
-      name: "employee",
+      name: "employeeId",
       message: "Which employee do you want to delete?",
       choices: employeeChoices,
     },
@@ -146,33 +146,36 @@ async function removeEmployee() {
 }
 
 // Function to update an employee's role
-async function updateRole(employeeId, roleId) {
+async function updateRole() {
   const roles = await db.viewRoles();
   const roleChoices = roles.map(({ id, title }) => ({
     name: title,
     value: id,
   }));
   const employees = await db.viewEmployees();
-  const employeeChoices = employees.map(({ first_name, last_name }) => ({
-    name: first_name,
+  const employeeChoices = employees.map(({ id, last_name }) => ({
     name: last_name,
+    value: id,
   }));
-  const { employee } = await inquirer.prompt([
+  const { employeeId } = await inquirer.prompt([
     {
       type: "list",
-      name: "employee",
-      message: "Which employee do you want to update?",
-
+      name: "employeeId",
+      message: "Which employee's role do you want to update?",
       choices: employeeChoices,
     },
+  ]);
+
+  const { roleId } = await inquirer.prompt([
     {
       type: "list",
       name: "roleId",
-      message: "Which role do you want to assign to the employee?",
+      message: "Which role do you want to assign the selected employee?",
       choices: roleChoices,
     },
   ]);
   await db.updateRole(employeeId, roleId);
+  console.log(`The employee's role has been updated.`);
   // Call function to go back to the questionnaire
   mainMenu();
 }
