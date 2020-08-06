@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a command line app that uses Inquirer and MYSQL to create a CMS intended foe department and employee management.
+This is a command line app that uses Inquirer and MYSQL to create a CMS intended for department and employee management. To see a video of how it works and a demonstration of it used together with the mysql workbench, please click here: <https://drive.google.com/file/d/1XqFGUEvawcVPoKijm9yJnUe5JoBxZ4-q/view?usp=sharing>
 
 ## Table of Contents
 
@@ -14,11 +14,59 @@ This is a command line app that uses Inquirer and MYSQL to create a CMS intended
 
 ## Installation
 
-If you'd like your very own note taker, please clone my repo. Make sure you have node.js installed on your computer. You can find the download here <https://nodejs.org/en/download/>. Run npm install to install all dependencies.
+If you'd like to use the employee tracker, please clone my repo. Make sure you have node.js installed on your computer. You can find the download here <https://nodejs.org/en/download/>. Run npm install to install all dependencies.
 
 ## Usage
 
-This app is intended for use by an HR department to add and manage employees within all the different departments of a company.
+This app is intended for use by an HR department to add and manage employees within all the different departments of a company. Start it by typing in node index.js.
+
+![start](images/start.png)
+
+Using the app, you can:
+
+View all employees
+
+![view all](images/view-employees.png)
+
+Add an employee
+
+![add](images/add-employee.png)
+
+Remove an employee
+
+![remove](images/delete-employee.png)
+
+Update an employee's role
+
+![update](images/update-employee.png)
+
+View all roles
+
+![view all roles](images/view-roles.png)
+
+Add a role
+
+![add role](images/add-role.png)
+
+Remove a role
+
+![remove role](images/remove-role.png)
+
+View all departments
+
+![view all departments](images/view-departments.png)
+
+Add a department
+
+![add department](images/add-department.png)
+
+Remove a department
+
+![remove department](images/remove-department.png)
+
+Quit
+
+![quit](images/quit.png)
 
 ## License
 
